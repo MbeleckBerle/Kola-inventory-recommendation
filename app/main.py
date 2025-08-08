@@ -42,7 +42,6 @@ async def recommend_products(
     quarter = quarter.upper()
     region_enc = le_region.transform([region])[0]
     quarter_enc = le_quarter.transform([quarter])[0]
-    # ...existing code...
     products = le_product.classes_
     product_encs = le_product.transform(products)
     X_pred = pd.DataFrame(
@@ -63,21 +62,6 @@ async def recommend_products(
             "recommendations": recommendations,
             "scores": scores,
         }
-    )
-
-
-@app.get("/")
-def root():
-    return {
-        "message": "Kola Market Inventory Recommendation API. Use /recommend endpoint."
-    }
-    recommendations = [products[i] for i in top_idx]
-    scores = [float(preds[i]) for i in top_idx]
-    return RecommendationResponse(
-        region=req.region,
-        quarter=req.quarter,
-        recommendations=recommendations,
-        scores=scores,
     )
 
 
