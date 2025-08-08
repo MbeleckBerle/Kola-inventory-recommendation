@@ -43,3 +43,5 @@ A production-ready FastAPI application for inventory recommendations. This proje
 ## Deployment
 
 For production deployment, consider using a process manager like Gunicorn or Uvicorn with workers behind a reverse proxy (NGINX).
+
+## Render hosting: https://kola-inventory-recommendation.onrender.com/docs
