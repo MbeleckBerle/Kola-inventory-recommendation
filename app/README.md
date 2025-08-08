@@ -11,12 +11,41 @@ This FastAPI app provides product recommendations for inventory planning in Ghan
 ## Folder Structure
 
 ```
-app/
-  main.py           # FastAPI app
-  requirements.txt  # Python dependencies
-  models/           # Trained model and encoders (joblib files)
-  README.md         # This file
+Kola-inventory-recommendation/
+│
+├── app/
+│   ├── data/
+│   │   ├── ghana_climate.csv
+│   │   ├── ghana_population.csv
+│   │   ├── ghana_product_trends.csv
+│   ├── images/
+│   │   ├── output.png
+│   ├── models/
+│   │   ├── le_product.joblib
+│   │   ├── le_quarter.joblib
+│   │   ├── le_region.joblib
+│   │   ├── rf_model.joblib
+│   ├── notebook/
+│   │   ├── FAOSTAT_data_en_8-7-2025.csv
+│   │   ├── FAOSTAT_EDA.ipynb
+│   │   ├── inventory_recommendation.ipynb
+│   ├── main.py
+│   ├── model_loader.py
+│   ├── schemas.py
+│   ├── utils.py
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── __init__.py
+│   ├── venv/
+│   └── __pycache__/
+├── inventory_recommendation.ipynb
+├── Kola_documentation.pdf
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
+
+This structure provides an overview of the project organization, including data files, models, notebooks, and the main application code.
 
 ## Usage
 
