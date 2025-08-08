@@ -1,133 +1,86 @@
-# Kola Inventory Recommendation Prototype
+# Kola Market Inventory Recommendation API
 
-This repository implements a data-driven inventory recommendation system for two Ghanaian towns—**Accra** (urban/coastal) and **Tamale** (northern/savannah). It includes:
+This FastAPI app provides product recommendations for inventory planning in Ghanaian towns using real Google Trends data and a machine learning model.
 
-- A Jupyter notebook for data exploration and model training
-- A FastAPI service exposing a recommendation endpoint
-- Machine learning model artifacts (Random Forest) and encoders
-- Suggestions for WhatsApp integration via Azure Bot Service
+## Features
+
+- `/recommend` endpoint: Get top product recommendations for a region and quarter.
+- Uses a trained Random Forest model and label encoders.
+- Ready for production deployment (see requirements.txt).
 
 ## Folder Structure
 
 ```
-Kola-inventory-recommendation/
-│
-├── app/
-│   ├── main.py            # FastAPI application entry point
-│   ├── notebook/          # Jupyter notebook for data analysis and ML
-│   ├── models/            # Trained model and encoder artifacts
-│   └── utils/             # Utility functions (if any)
-│
-├── requirements.txt       # Python dependencies
-├── README.md              # Project documentation (this file)
-└── docs/                  # Documentation templates (e.g., Overleaf .tex)
+app/
+  main.py           # FastAPI app
+  requirements.txt  # Python dependencies
+  models/           # Trained model and encoders (joblib files)
+  README.md         # This file
 ```
 
-## Installation
+## Usage
 
-1. Clone the repository:
-   ```powershell
-   git clone https://github.com/MbeleckBerle/Kola-inventory-recommendation.git
-   cd Kola-inventory-recommendation
-   ```
-2. Create and activate a virtual environment:
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate
-   ```
+1. Place the trained model and encoder files in `app/models/`:
+   - `rf_model.joblib`
+   - `le_region.joblib`
+   - `le_quarter.joblib`
+   - `le_product.joblib`
+2. Place `ghana_product_trends.csv` in the project root.
 3. Install dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-## Running the Jupyter Notebook
-
-1. Install Jupyter:
-   ```powershell
-   pip install notebook
-   ```
-2. Launch the notebook:
-   ```powershell
-   jupyter notebook app/notebook/inventory_recommendation.ipynb
-   ```
-3. Follow cells to fetch data, train the model, and visualize results.
-
-## FastAPI Recommendation Service
-
-1. Ensure model artifacts are available in `app/models/` (exported from the notebook).
-2. Start the API server:
-   ```powershell
-   uvicorn app.main:app --reload --port 8000
-   ```
-3. Access the interactive Swagger UI:
-   `http://localhost:8000/docs`
-4. Example request:
-   ```url
-   GET http://localhost:8000/recommend?town=Accra&quarter=Q2&top_n=5
-   ```
-
-## Dependencies
-
-Key packages are listed in `requirements.txt`:
-
-- pandas, numpy
-- scikit-learn
-- pytrends
-- fastapi, uvicorn
-- joblib
-
-## Documentation
-
-- Overleaf LaTeX template: `docs/overleaf.tex`
-- Use it to generate a full project report.
-
-## Future Enhancements
-
-- Integrate real-time sales and weather data
-- Deploy a web dashboard for interactive queries
-- Implement WhatsApp channel via Azure Bot Service
-- Explore time series forecasting models (ARIMA, LSTM)
-
-## Folder Structure
-
-- `app/`
-  - `main.py`: FastAPI application entry point.
-  - `models/`: Serialized machine learning models and related files.
-  - `schemas/`: Pydantic models for request/response validation.
-  - `utils/`: Utility functions and helper scripts.
-- `tests/`: Automated tests for the application.
-- `requirements.txt`: Project dependencies.
-- `README.md`: Project documentation.
-- `.gitignore`: Files and folders to be ignored by Git.
-
-## Setup Instructions
-
-1. Create a virtual environment:
-
-   ```bash
-   python -m venv venv
-   ```
-
-2. Activate the virtual environment:
-
-   - On Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-
-3. Install the dependencies:
-
    ```bash
    pip install -r requirements.txt
    ```
-
-4. Run the FastAPI app using Uvicorn:
+4. Run the API:
    ```bash
    uvicorn app.main:app --reload
    ```
+5. Access the docs at `http://127.0.0.1:8000/docs`
+
+## Extending & Integrating
+
+- Integrate with WhatsApp or dashboards via the API.
+- Add more endpoints for explainability or batch recommendations.
+- Deploy on cloud (Azure, AWS, GCP) for scalability.
+
+## Data & Model
+
+- Data sourced from Google Trends, World Bank, and Ghana Statistical Service.
+- Model: Random Forest regressor trained on real trend data.
+
+---
+
+For more, see the notebook for data sourcing, logic, and model training.
+
+# FastAPI Application
+
+This folder contains the production-ready FastAPI application for Inventory Recommendations.
+
+## Structure
+
+- `main.py`: Entry point for the FastAPI server.
+- `models/`: Contains the serialized machine learning models and encoders.
+- `utils/`: Utility functions and helper scripts.
+
+## Setup
+
+1. Install dependencies from the project root:
+   ```bash
+   pip install -r ../requirements.txt
+   ```
+2. Run the application:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+3. Access the interactive API docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+## Testing
+
+- Place tests in the `../tests` directory and run them using your preferred test runner.
 
 ## Deployment
 
-For production deployment, consider using a process manager like Gunicorn or Uvicorn with workers behind a reverse proxy (NGINX).
+For production deployments, consider using a process manager (e.g., Gunicorn) with Uvicorn workers behind a reverse proxy (e.g., NGINX).
 
-## Render hosting: https://kola-inventory-recommendation.onrender.com/docs
+for further improvements, we could attach a database to store usage over time which will be used to further improve the system.
+
+Render link: https://kola-inventory-recommendation.onrender.com/docs
